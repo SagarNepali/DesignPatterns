@@ -3,7 +3,10 @@ package strategyPattern.lab1.service;
 import strategyPattern.lab1.DAO.AccountDAO;
 import strategyPattern.lab1.DAO.AccountDAOImpl;
 import strategyPattern.lab1.model.Account;
+import strategyPattern.lab1.model.CheckingInterest;
 import strategyPattern.lab1.model.Customer;
+import strategyPattern.lab1.model.SavingInterest;
+import strategyPattern.lab1.utils.AccountType;
 
 import java.util.Collection;
 
@@ -14,8 +17,8 @@ public class AccountServiceImpl implements AccountService {
 		accountDAO = new AccountDAOImpl();
 	}
 
-	public Account createAccount(String accountNumber, String customerName) {
-		Account account = new Account(accountNumber);
+	public Account createAccount(String accountNumber, String customerName, AccountType type) {
+		Account account = new Account(accountNumber,type);
 		Customer customer = new Customer(customerName);
 		account.setCustomer(customer);
 		
@@ -58,6 +61,15 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public void addInterest() {
+		Collection<Account> accounts = getAllAccounts();
+		accounts.forEach(a ->{
+			if(a.getAccountType().equals(AccountType.SAVING)){
+				a.setInterestBehavior(new SavingInterest());
+			}else{
+				a.setInterestBehavior(new CheckingInterest());
+			}
 
+			a.addInterest(a.getBalance());
+		});
 	}
 }

@@ -5,22 +5,28 @@ import strategyPattern.lab1.model.AccountEntry;
 import strategyPattern.lab1.model.Customer;
 import strategyPattern.lab1.service.AccountService;
 import strategyPattern.lab1.service.AccountServiceImpl;
+import strategyPattern.lab1.utils.AccountType;
 
 public class Application {
 	public static void main(String[] args) {
 		AccountService accountService = new AccountServiceImpl();
 
 		// create 2 accounts;
-		accountService.createAccount("1263862", "Frank Brown");
-		accountService.createAccount("4253892", "John Doe");
+		accountService.createAccount("1263862", "Frank Brown", AccountType.SAVING);
+		accountService.createAccount("4253892", "John Doe",AccountType.CHECKING);
 		// use account 1;
 		accountService.deposit("1263862", 240);
 		accountService.deposit("1263862", 529);
 		accountService.withdraw("1263862", 230);
+
 		// use account 2;
 		accountService.deposit("4253892", 12450);
 		accountService.transferFunds("4253892", "1263862", 100, "payment of invoice 10232");
+
+		//add interest
+		accountService.addInterest();
 		// show balances
+
 
 		for (Account account : accountService.getAllAccounts()) {
 			Customer customer = account.getCustomer();

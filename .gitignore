@@ -1,7 +1,7 @@
 HELP.md
 target/
 .mvn
-src/main/java/com/lms/dataaccess/storage/
+out/
 !**/src/test/**
 
 ### STS ###
@@ -12,6 +12,7 @@ src/main/java/com/lms/dataaccess/storage/
 .settings
 .springBeans
 .sts4-cache
+.class
 
 ### IntelliJ IDEA ###
 .idea

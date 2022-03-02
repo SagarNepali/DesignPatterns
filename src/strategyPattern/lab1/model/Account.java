@@ -1,5 +1,8 @@
 package strategyPattern.lab1.model;
 
+import strategyPattern.lab1.utils.AccountType;
+import strategyPattern.lab1.utils.InterestBehavior;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -7,12 +10,17 @@ import java.util.List;
 public class Account {
 	private Customer customer;
 
+	private AccountType accountType;
+
+	private InterestBehavior interestBehavior;
+
 	private String accountNumber;
 
 	private List<AccountEntry> entryList = new ArrayList<AccountEntry>();
 
-	public Account(String accountNumber) {
+	public Account(String accountNumber, AccountType accountType) {
 		this.accountNumber = accountNumber;
+		this.accountType = accountType;
 	}
 
 	public String getAccountNumber() {
@@ -56,6 +64,14 @@ public class Account {
 		toAccount.addEntry(toEntry);
 	}
 
+	public AccountType getAccountType() {
+		return accountType;
+	}
+
+	public void setAccountType(AccountType accountType) {
+		this.accountType = accountType;
+	}
+
 	public Customer getCustomer() {
 		return customer;
 	}
@@ -68,4 +84,18 @@ public class Account {
 		return entryList;
 	}
 
+	public void setInterestBehavior(InterestBehavior interestBehavior){
+		this.interestBehavior = interestBehavior;
+	}
+
+	public InterestBehavior getInterestBehavior(){
+		return interestBehavior;
+	}
+
+	public void addInterest(double balance) {
+		double bal = interestBehavior.calculateInterest(balance);
+		AccountEntry accountEntry = new AccountEntry(bal,"interest", "","");
+		addEntry(accountEntry);
+
+	}
 }
